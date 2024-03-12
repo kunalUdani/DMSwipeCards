@@ -87,15 +87,53 @@ public class DMSwipeCardsView<Element>: UIView {
 		}
 	}
 
-	func swipeTopCardRight() {
+	public func swipeTopCardRight() {
 		// TODO: not yet supported
-		fatalError("Not yet supported")
+//		fatalError("Not yet supported")
+        
+        let card = loadedCards.first ?? DMSwipeCard()
+        acceptAnimation(card)
+        cardSwipedRight(card)
 	}
 
-	func swipeTopCardLeft() {
+	public func swipeTopCardLeft() {
 		// TODO: not yet supported
-		fatalError("Not yet supported")
+//		fatalError("Not yet supported")
+        let card = loadedCards.first ?? DMSwipeCard()
+        rejectAnimation(card)
+        cardSwipedRight(card)
 	}
+    
+    func acceptAnimation(_ card: DMSwipeCard) {
+        let scale = CGAffineTransformMakeScale(1, 1)
+        let translate = CGAffineTransformMakeTranslation(0, 0)
+        card.transform = CGAffineTransformConcat(scale, translate)
+
+        UIView.animate(withDuration:0.35, animations: {
+
+            let rotate = CGAffineTransformMakeRotation(.pi / 2)
+            let translate = CGAffineTransformMakeTranslation(375, 0)
+            card.transform = CGAffineTransformConcat(rotate, translate)
+
+            }, completion: { _ in
+                card.removeFromSuperview()
+        })
+    }
+    
+    func rejectAnimation(_ card: DMSwipeCard) {
+
+        let scale = CGAffineTransformMakeScale(1, 1)
+        let translate = CGAffineTransformMakeTranslation(0, 0)
+        card.transform = CGAffineTransformConcat(scale, translate)
+        
+        UIView.animate(withDuration:0.35, animations: {
+            let rotate = CGAffineTransformMakeRotation(-.pi / 2)
+            let translate = CGAffineTransformMakeTranslation((-375), 0)
+            card.transform = CGAffineTransformConcat(rotate, translate)
+        }, completion: {_ in
+            card.removeFromSuperview()
+        })
+    }
 }
 
 extension DMSwipeCardsView: DMSwipeCardDelegate {
