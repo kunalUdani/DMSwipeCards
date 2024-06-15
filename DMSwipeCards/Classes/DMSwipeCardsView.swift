@@ -101,7 +101,7 @@ public class DMSwipeCardsView<Element>: UIView {
 //		fatalError("Not yet supported")
         let card = loadedCards.first ?? DMSwipeCard()
         rejectAnimation(card)
-        cardSwipedRight(card)
+        cardSwipedLeft(card)
 	}
     
     func acceptAnimation(_ card: DMSwipeCard) {
